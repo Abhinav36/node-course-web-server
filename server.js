@@ -2,6 +2,11 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+//When heroku deploys it will give a port number
+//env lists pair of env var that is available through which heroku will interact
+const port = process.env.PORT || 3000;
+
+
 //To create an app
 var app = express();
 
@@ -33,6 +38,8 @@ app.use( (req , res , next) => {
 // });
 
 //for static web rendering
+
+
 app.use(express.static(__dirname+'/public'));
 
 hbs.registerHelper('currentyear',() => {
@@ -81,6 +88,8 @@ app.get('/bad',(req , res) => {
 
 //To bind the server to our port with a port number
 //Also you need to stop it manually since it will continue to listen always until you stop it explicitely
-app.listen(3000);
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}`)
+});
 //takes 2 argument , 2nd can be an arrow function
 //since we have created it on local server we will use localhost:port no. to view our app
